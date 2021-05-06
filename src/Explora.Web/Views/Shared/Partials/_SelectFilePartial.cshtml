@@ -1,0 +1,35 @@
+﻿
+@model Explora.Web.Models.SelectFileViewModel
+
+@*@using (Html.BeginForm(Model.Action, Model.Controller, Model.Method, new { enctype = "multipart/form-data" }))
+{
+    <input type="file" name="file" id="file1" />
+    <input type="submit" />
+}*@
+
+    <form asp-action=@Model.Action method=@Model.Method>
+
+        <input type="file" name="file" id="file1" />
+        <input type="submit" />
+
+    </form>
+
+
+@*@<form action="files/create" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" id="file1" />
+    <input type="submit" />
+</form>
+
+@*<div class="form-group">
+        <div class="col-sm-6 col-sm-offset-6">
+            <div class="hidden">
+                <input class="file_element" type="file" name="fileUpload" id="fileUpload" onchange="upload_picture(this)"/>
+            </div>
+
+
+            <button class="btn btn-primary file_select" onclick="select_image()">
+                <span class="glyphicon glyphicon-picture"></span>
+                Subir Imagen
+            </button>
+        </div>
+    </div>*@

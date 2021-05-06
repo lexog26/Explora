@@ -1,0 +1,33 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <ul class="navbar-nav navbar-align">
+
+        <li class="nav-item dropdown">
+
+            <a class="nav-link dropdown-toggle d-none d-sm-inline-block" data-toggle="dropdown">
+                <span class="text-dark">@UserManager.GetUserName(User)</span>
+            </a>
+
+            <div class="dropdown-menu dropdown-menu-right">
+                <!--<a class="dropdown-item" href="#">
+                    <i class="align-middle mr-1" data-feather="user"></i> Perfil
+                </a>
+
+                <div class="dropdown-divider"></div>-->
+
+                <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post">
+                    <!--<a class="dropdown-item" href="#">Cerrar sesión</a>-->
+                    <button type="submit" class="dropdown-item">Cerrar sesión</button>
+                </form>
+                
+            </div>
+        </li>
+    </ul>
+    
+}

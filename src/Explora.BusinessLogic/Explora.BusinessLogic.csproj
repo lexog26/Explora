@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Explora.DataLayer\Explora.DataLayer.csproj" />
+    <ProjectReference Include="..\Explora.DataTransferObjects\Explora.DataTransferObjects.csproj" />
+    <ProjectReference Include="..\Explora.Domain\Explora.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

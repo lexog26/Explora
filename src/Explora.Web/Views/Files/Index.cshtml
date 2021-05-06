@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Explora.Web.Models.FileListModel>
+
+@{
+    ViewData["Title"] = "Modelos 3D";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12 grid-margin">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent p-0 mt-1 mb-0">
+                <li class="breadcrumb-item active" aria-current="page">Modelos 3D</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-8">
+        <h1 class="card-title">MODELOS 3D</h1>
+    </div>
+    <div class="col-4 text-right">
+        <a class="btn btn-primary botonAgregar" href="/files/create" role="button">AGREGAR MODELO</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th>NOMBRE</th>
+                            <th>COLECCIÓN</th>
+                            <th>DISPOSITIVO</th>
+                            <th>ACCIONES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <img src=@item.ImageUrl class="rounded float-start" />
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Collection)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Platform)
+                                </td>
+                                <td>
+                                    <a title="Edit" href="/files/edit/@item.Id" class="fa fa-edit" style="color:#495057;">
+                                    </a> |
+                                    <a title="Delete" href="#" class="fa fa-trash" style="color:#495057;" onclick="delete_file_function(@item.Id)" />
+                                </td>
+                            </tr>
+                         }
+                     </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,105 @@
+﻿@using Explora.Enums
+@model List<string>
+
+@{
+    ViewData["Title"] = "Crear Modelo";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12 grid-margin">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent p-0 mt-1 mb-0">
+                <li class="breadcrumb-item" aria-current="page">Modelos 3D</li>
+                <li class="breadcrumb-item active" aria-current="page">Crear Modelo</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-1 text-left">
+        <a class="btn btn-primary botonVolver" asp-action="Index" role="button"><</a>
+    </div>
+    <div class="col-7 text-left">
+        <h1 class="card-title crear">MODELO 3D</h1>
+    </div>
+    @*<div class="col-4 text-right">
+            <a class="btn btn-primary botonAgregar" href="#" role="button">GUARDAR</a>
+        </div>*@
+</div>
+
+@using (Html.BeginForm("Create", "Files", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="row">
+        <div class="col-lg-8 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="float-chart-container">
+                        <div class="form-group">
+                            <label>NOMBRE</label>
+                            <input type="text" class="form-control" name="name" aria-describedby="emailHelp">
+                        </div>
+                        <div class="form-group">
+                            <label>DESCRIPCIÓN</label>
+                            <textarea class="form-control" name="description" rows="5"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label>COLECCIÓN</label>
+                        <select class="form-control" name="collection" asp-items="@(new SelectList(Model))">
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="float-chart-container">
+                        <label>ICONO</label>
+                        <div class="form-group">
+                            <input type="file" class="form-control-file" name="image">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="float-chart-container">
+                        <label>ARCHIVOS DISPOSITIVOS</label>
+                        <div class="form-group">
+                            <label class="control-label">Android</label>
+                            <input type="file" class="form-control-file" name="androidFile">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">IOs</label>
+                            <input type="file" class="form-control-file" name="iosFile">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <button type="submit" class="btn btn-primary botonAgregar">Guardar</button>
+        </div>
+    </div>
+}
+

@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Explora.DataTransferObjects\Explora.DataTransferObjects.csproj" />
+    <ProjectReference Include="..\Explora.Enums\Explora.Enums.csproj" />
+  </ItemGroup>
+
+</Project>
