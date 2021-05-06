@@ -48,25 +48,6 @@ namespace Explora.Web
                     options.RequireHttpsMetadata = false;
                     options.Audience = "filesApi";
                 });
-            //Identity Oidc
-            /*JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
-            services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = "Cookies";
-                options.DefaultChallengeScheme = "oidc";
-            })
-                .AddCookie("Cookies")
-                .AddOpenIdConnect("oidc", options =>
-                {
-                    options.Authority = identityUrl;
-                    options.RequireHttpsMetadata = false;
-
-                    options.ClientId = "mvc";
-                    options.ClientSecret = "secret";
-                    options.ResponseType = "code";
-
-                    options.SaveTokens = true;
-                });*/
 
             //Mapper
             services.AddAutoMapper(typeof(ExploraMapperProfile));

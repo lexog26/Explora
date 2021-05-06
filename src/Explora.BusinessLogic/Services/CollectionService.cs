@@ -60,6 +60,21 @@ namespace Explora.BusinessLogic.Services
                 )));
         }
 
+        public async Task<CollectionDto> UpdateAsync(CollectionDto collectionDto)
+        {
+            var collection = await _repository.GetEntityByIdAsync<ExploraCollection, int>(collectionDto.Id);
+            if (collection != null)
+            {
+                collection.Name = collectionDto.Name;
+                collection.Description = collectionDto.Description;
+                collection.ModifiedDate = DateTime.UtcNow;
+                _repository.Update(collection);
+                await SaveChangesAsync();
+                return _mapper.Map<CollectionDto>(collection);
+            }
+            return default(CollectionDto);
+        }
+
         private string GenerateImageUrl(int id)
         {
             return $"api/collections/{id}/image-data";

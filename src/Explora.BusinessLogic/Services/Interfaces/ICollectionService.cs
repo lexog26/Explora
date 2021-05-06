@@ -10,6 +10,8 @@ namespace Explora.BusinessLogic.Services.Interfaces
     {
         Task<CollectionDto> CreateAsync(CollectionDto collectionDto);
 
+        Task<CollectionDto> UpdateAsync(CollectionDto collectionDto);
+
         Task<CollectionDto> GetByIdAsync(int id);
 
         Task<IEnumerable<CollectionDto>> GetAllAsync(int limit = int.MaxValue);
