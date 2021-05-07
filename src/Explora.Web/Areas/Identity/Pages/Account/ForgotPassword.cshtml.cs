@@ -16,6 +16,7 @@ namespace Explora.Web.Areas.Identity.Pages.Account
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IEmailSender _emailSender;
+        private const string _emailSubject = "Restablecer contraseña";
 
         public ForgotPasswordModel(UserManager<IdentityUser> userManager, IEmailSender emailSender)
         {
@@ -55,8 +56,8 @@ namespace Explora.Web.Areas.Identity.Pages.Account
 
                 await _emailSender.SendEmailAsync(
                     Input.Email,
-                    "Reset Password",
-                    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    _emailSubject,
+                    $"Por favor, restablezca su contraseña <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>seleccionando aquí</a>.");
 
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }
