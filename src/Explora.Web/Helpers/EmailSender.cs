@@ -22,20 +22,24 @@ namespace Explora.Web.Helpers
 
         public async Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
-            using (SmtpClient client = new SmtpClient(_smtpConfig.Host, _smtpConfig.Port))
+            try
             {
-                var message = new MailMessage();
-                message.From = new MailAddress(_smtpConfig.From, _smtpConfig.Alias);
-                message.BodyEncoding = Encoding.UTF8;
-                message.To.Add(email);
-                message.Body = htmlMessage;
-                message.Subject = subject;
-                message.IsBodyHtml = true;
-                client.UseDefaultCredentials = false;
-                client.EnableSsl = true;
-                client.Credentials = new NetworkCredential(_smtpConfig.From, _smtpConfig.Password);
-                await client.SendMailAsync(message);
+                using (SmtpClient client = new SmtpClient(_smtpConfig.Host, _smtpConfig.Port))
+                {
+                    var message = new MailMessage();
+                    message.From = new MailAddress(_smtpConfig.From, _smtpConfig.Alias);
+                    message.BodyEncoding = Encoding.UTF8;
+                    message.To.Add(email);
+                    message.Body = htmlMessage;
+                    message.Subject = subject;
+                    message.IsBodyHtml = true;
+                    client.UseDefaultCredentials = false;
+                    client.EnableSsl = true;
+                    client.Credentials = new NetworkCredential(_smtpConfig.From, _smtpConfig.Password);
+                    await client.SendMailAsync(message);
+                }
             }
+            catch { }
         }
     }
 }
