@@ -35,7 +35,7 @@
                     <div class="float-chart-container">
                         <div class="form-group">
                             <label>NOMBRE</label>
-                            <input type="text" class="form-control" name="name" aria-describedby="emailHelp">
+                            <input type="text" class="form-control" required name="name" aria-describedby="emailHelp">
                         </div>
                         <div class="form-group">
                             <label>DESCRIPCIÓN</label>
@@ -51,7 +51,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label>COLECCIÓN</label>
-                        <select class="form-control" name="collection" asp-items="@(new SelectList(Model))">
+                        <select required class="form-control" name="collection" asp-items="@(new SelectList(Model))">
                             <option></option>
                         </select>
                     </div>

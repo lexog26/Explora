@@ -77,26 +77,27 @@ namespace Explora.Web.Controllers
                 if (!string.IsNullOrEmpty(collection))
                 {
                     collectionId = (await _collectionService.GetCollectionsByNameAsync(collection)).First().Id;
-                }
-                var androidDto = new FileDto
-                {
-                    Name = name,
-                    Description = description,
-                    CollectionId = collectionId,
-                    Platform = Platform.Android
-                };
-                //Create Android file
-                await _fileService.CreateAsync(androidDto, androidFile.OpenReadStream(), image.OpenReadStream());
 
-                //Create IOs file
-                var iosDto = new FileDto
-                {
-                    Name = name,
-                    Description = description,
-                    CollectionId = collectionId,
-                    Platform = Platform.IOs
-                };
-                await _fileService.CreateAsync(iosDto, iosFile.OpenReadStream(), image.OpenReadStream());
+                    var androidDto = new FileDto
+                    {
+                        Name = name,
+                        Description = description,
+                        CollectionId = collectionId,
+                        Platform = Platform.Android
+                    };
+                    //Create Android file
+                    await _fileService.CreateAsync(androidDto, androidFile.OpenReadStream(), image.OpenReadStream());
+
+                    //Create IOs file
+                    var iosDto = new FileDto
+                    {
+                        Name = name,
+                        Description = description,
+                        CollectionId = collectionId,
+                        Platform = Platform.IOs
+                    };
+                    await _fileService.CreateAsync(iosDto, iosFile.OpenReadStream(), image.OpenReadStream());
+                }
 
                 return RedirectToAction(nameof(Index));
             }
