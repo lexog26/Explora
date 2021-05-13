@@ -25,6 +25,8 @@ namespace Explora.DataLayer.Context
 
         public DbSet<ExploraCollection> Collection { get; set; }
 
+        public DbSet<ExploraTotem> Totem { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -34,6 +36,7 @@ namespace Explora.DataLayer.Context
             new UserConfig(builder.Entity<User>());
             new ExploraFileConfig(builder.Entity<ExploraFile>());
             new ExploraCollectionConfig(builder.Entity<ExploraCollection>());
+            new ExploraTotemConfig(builder.Entity<ExploraTotem>());
 
         }
 
