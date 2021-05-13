@@ -21,6 +21,7 @@ namespace Explora.BusinessLogic.Configurations.Mapper.Explora
             CreateMap<ExploraFile, FileDto>().ReverseMap();
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<ExploraCollection, CollectionDto>().ReverseMap();
+            CreateMap<ExploraTotem, TotemDto>().ReverseMap();
         }
     }
 }
