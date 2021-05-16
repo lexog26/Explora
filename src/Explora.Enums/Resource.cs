@@ -8,6 +8,8 @@ namespace Explora.Enums
     {
         FileImage,
         CollectionImage,
-        FileBlob
+        TotemImage,
+        FileBlob,
+        TotemBlob
     }
 }
