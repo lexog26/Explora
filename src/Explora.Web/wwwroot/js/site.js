@@ -18,3 +18,19 @@ function delete_file_function(fileId) {
 
     }
 }
+
+function delete_totem_function(totemId) {
+    if (confirm('Desea eliminar el totem?')) {
+        $.ajax({
+            type: "Delete",
+            url: "/totems/delete",
+            data: { id: totemId },
+            success: function () {
+                alert("Totem eliminado");
+                window.location.replace("/totems");
+            }
+        })
+    } else {
+
+    }
+}
