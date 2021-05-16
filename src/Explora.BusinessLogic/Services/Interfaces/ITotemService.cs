@@ -14,7 +14,7 @@ namespace Explora.BusinessLogic.Services.Interfaces
 
         Task<TotemDto> GetByIdAsync(int id);
 
-        Task<IEnumerable<TotemDto>> GetAllAsync(int limit = int.MaxValue);
+        Task<IEnumerable<TotemDto>> GetAllAsync(int limit = int.MaxValue, bool deleted = false);
 
         Task<bool> DeleteAsync(int id);
     }

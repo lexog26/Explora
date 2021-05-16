@@ -32,15 +32,22 @@ namespace Explora.BusinessLogic.Services
 
         public async Task<bool> DeleteAsync(int id)
         {
-            _repository.Delete<ExploraTotem, int>(id);
+            var totem = await _repository.GetEntityByIdAsync<ExploraTotem, int>(id);
+            //soft-delete in db
+            totem.Deleted = true;
+            totem.ModifiedDate = DateTime.UtcNow;
+            _repository.Update(totem);
             await SaveChangesAsync();
+
+            //_repository.Delete<ExploraTotem, int>(id);
+
             return true;
         }
 
-        public async Task<IEnumerable<TotemDto>> GetAllAsync(int limit = int.MaxValue)
+        public async Task<IEnumerable<TotemDto>> GetAllAsync(int limit = int.MaxValue, bool deleted = false)
         {
             return _mapper.Map<IEnumerable<TotemDto>>(
-                await _repository.GetAllAsync<ExploraTotem>(take: limit));
+                await _repository.GetByFilterAsync<ExploraTotem>(filter: x => x.Deleted == deleted,  take: limit));
         }
 
         public async Task<TotemDto> GetByIdAsync(int id)
