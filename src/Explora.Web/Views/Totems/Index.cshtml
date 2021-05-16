@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Explora.DataTransferObjects.DataTransferObjects.TotemDto>
 
 @{
-    ViewData["Title"] = "Totems";
+    ViewData["Title"] = "Tótems";
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
@@ -9,7 +9,7 @@
     <div class="col-lg-12 grid-margin">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb bg-transparent p-0 mt-1 mb-0">
-                <li class="breadcrumb-item active" aria-current="page">Totems</li>
+                <li class="breadcrumb-item active" aria-current="page">Tótems</li>
             </ol>
         </nav>
     </div>
@@ -17,10 +17,10 @@
 
 <div class="row">
     <div class="col-8">
-        <h1 class="card-title">Totems</h1>
+        <h1 class="card-title">TÓTEMS</h1>
     </div>
     <div class="col-4 text-right">
-        <a class="btn btn-primary botonAgregar" href="/totems/create" role="button">AGREGAR TOTEM</a>
+        <a class="btn btn-primary botonAgregar" href="/totems/create" role="button">AGREGAR TÓTEM</a>
     </div>
 </div>
 
@@ -49,7 +49,7 @@
                                     @Html.DisplayFor(modelItem => item.Name)
                                 </td>
                                 <td>
-                                    <a title="Edit" href="/totems/edit/@item.Id" class="fa fa-edit" style="color:#495057;">
+                                    <a title="Editar" href="/totems/edit/@item.Id" class="fa fa-edit" style="color:#495057;">
                                     </a> |
                                     <a title="Eliminar" href="#" class="fa fa-trash" style="color:#495057;" onclick="delete_totem_function(@item.Id)" />
                                 </td>

@@ -128,6 +128,8 @@ namespace Explora.Web
 
             services.AddScoped<ICollectionService, CollectionService>();
 
+            services.AddScoped<ITotemService, TotemService>();
+
             //Put login page as startup page
             services.AddMvc().AddRazorPagesOptions(options => {
                 options.Conventions.AddAreaPageRoute("Identity", "/Account/Login", "");
