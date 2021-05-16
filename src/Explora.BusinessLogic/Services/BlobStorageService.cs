@@ -29,27 +29,28 @@ namespace Explora.BusinessLogic.Services
 
         public async Task<bool> SaveResourceBlobAsync(ResourceBlobDto blobDto)
         {
-            var directoryInfo = GetResourceDirectoryInfo(blobDto.Key);
+            if (blobDto.Blob != null)
+            {
+                var directoryInfo = GetResourceDirectoryInfo(blobDto.Key);
 
-            //Delete to avoid bad information
-            if(directoryInfo.Exists)
-            {
-                directoryInfo.Delete();
+                //Delete to avoid bad information
+                if (directoryInfo.Exists)
+                {
+                    directoryInfo.Delete();
+                }
+                ///
+                directoryInfo.Create();
+                var path = Path.Combine(directoryInfo.FullName, blobDto.Name);
+                using (var stream = new FileStream(path, FileMode.OpenOrCreate))
+                {
+                    await blobDto.Blob.CopyToAsync(stream);
+                }
             }
-            ///
-            directoryInfo.Create();
-            //var resourceDirPath = GetResouceDirectoryPath(blobDto.Key);
-            var path = Path.Combine(directoryInfo.FullName, blobDto.Name);
-            using (var stream = new FileStream(path, FileMode.OpenOrCreate))
-            {
-                await blobDto.Blob.CopyToAsync(stream);
-            }
-            return true;
+            return blobDto.Blob != null;
         }
 
         public async Task<bool> UpdateResourceBlobAsync(ResourceBlobDto resourceDto)
         {
-            DeleteResource(new ResourceKeyDto { Id = resourceDto.Id, Type = resourceDto.Type });
             return await SaveResourceBlobAsync(resourceDto);
         }
 

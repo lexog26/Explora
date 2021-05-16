@@ -48,14 +48,17 @@ namespace Explora.Web.Controllers
             var collection = await _collectionService.CreateAsync(collectionDto);
 
             //Save collectio's image
-            await _blobStorageService.SaveResourceBlobAsync(
-                new ResourceBlobDto
-                {
-                    Id = collection.Id,
-                    Name = collection.Name,
-                    Type = Enums.Resource.CollectionImage,
-                    Blob = image.OpenReadStream()
-                });
+            if (image != null)
+            {
+                await _blobStorageService.SaveResourceBlobAsync(
+                    new ResourceBlobDto
+                    {
+                        Id = collection.Id,
+                        Name = collection.Name,
+                        Type = Enums.Resource.CollectionImage,
+                        Blob = image.OpenReadStream()
+                    });
+            }
 
             return RedirectToAction(nameof(Index));
         }

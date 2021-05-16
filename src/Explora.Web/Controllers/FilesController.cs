@@ -86,7 +86,8 @@ namespace Explora.Web.Controllers
                         Platform = Platform.Android
                     };
                     //Create Android file
-                    await _fileService.CreateAsync(androidDto, androidFile.OpenReadStream(), image.OpenReadStream());
+                    await _fileService.CreateAsync(androidDto, androidFile != null ? androidFile.OpenReadStream() : null,
+                                                   image != null ? image.OpenReadStream() : null);
 
                     //Create IOs file
                     var iosDto = new FileDto
@@ -96,7 +97,8 @@ namespace Explora.Web.Controllers
                         CollectionId = collectionId,
                         Platform = Platform.IOs
                     };
-                    await _fileService.CreateAsync(iosDto, iosFile.OpenReadStream(), image.OpenReadStream());
+                    await _fileService.CreateAsync(iosDto, iosFile != null ? iosFile.OpenReadStream() : null,
+                                                   image != null ? image.OpenReadStream() : null);
                 }
 
                 return RedirectToAction(nameof(Index));

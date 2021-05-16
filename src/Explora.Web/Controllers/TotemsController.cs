@@ -49,24 +49,30 @@ namespace Explora.Web.Controllers
             var totem = await _totemService.CreateAsync(totemDto);
 
             //Save totem's image
-            await _blobStorageService.SaveResourceBlobAsync(
-                new ResourceBlobDto
-                {
-                    Id = totem.Id,
-                    Name = totem.Name,
-                    Type = Resource.TotemImage,
-                    Blob = image.OpenReadStream()
-                });
+            if (image != null)
+            {
+                await _blobStorageService.SaveResourceBlobAsync(
+                    new ResourceBlobDto
+                    {
+                        Id = totem.Id,
+                        Name = totem.Name,
+                        Type = Resource.TotemImage,
+                        Blob = image.OpenReadStream()
+                    });
+            }
 
             //Save totem's file blob
-            await _blobStorageService.SaveResourceBlobAsync(
-                new ResourceBlobDto
-                {
-                    Id = totem.Id,
-                    Name = totem.Name,
-                    Type = Resource.TotemBlob,
-                    Blob = file.OpenReadStream()
-                });
+            if (file != null)
+            {
+                await _blobStorageService.SaveResourceBlobAsync(
+                    new ResourceBlobDto
+                    {
+                        Id = totem.Id,
+                        Name = totem.Name,
+                        Type = Resource.TotemBlob,
+                        Blob = file.OpenReadStream()
+                    });
+            }
             return RedirectToAction(nameof(Index));
         }
 

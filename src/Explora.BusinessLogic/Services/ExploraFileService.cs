@@ -35,25 +35,30 @@ namespace Explora.BusinessLogic.Services
             await SaveChangesAsync();
 
             ///Save file blob
-            await _blobService.SaveResourceBlobAsync(
-                new ResourceBlobDto
-                {
-                    Id = entityFile.Id,
-                    Name = entityFile.Name,
-                    Type = Resource.FileBlob,
-                    Blob = blobData
-                });
+            if (blobData != null)
+            {
+                await _blobService.SaveResourceBlobAsync(
+                    new ResourceBlobDto
+                    {
+                        Id = entityFile.Id,
+                        Name = entityFile.Name,
+                        Type = Resource.FileBlob,
+                        Blob = blobData
+                    });
+            }
 
             //Save file image
-            await _blobService.SaveResourceBlobAsync(
-                new ResourceBlobDto
-                {
-                    Id = entityFile.Id,
-                    Name = entityFile.Name,
-                    Type = Resource.FileImage,
-                    Blob = imageData
-                });
-
+            if (imageData != null)
+            {
+                await _blobService.SaveResourceBlobAsync(
+                    new ResourceBlobDto
+                    {
+                        Id = entityFile.Id,
+                        Name = entityFile.Name,
+                        Type = Resource.FileImage,
+                        Blob = imageData
+                    });
+            }
 
             entityFile.Url = GenerateUrl(entityFile.Id);
             entityFile.ImageUrl = $"api/files/{entityFile.Id}/image-data";
