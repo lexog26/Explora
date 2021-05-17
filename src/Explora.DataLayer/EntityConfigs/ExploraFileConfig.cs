@@ -14,7 +14,7 @@ namespace Explora.DataLayer.EntityConfigs
             entity.Property(p => p.CollectionId).HasColumnName("collection_id").IsRequired(false);
             entity.Property(p => p.Name).HasColumnName("name").IsRequired(false).HasMaxLength(100).HasDefaultValue(null);
             entity.Property(p => p.Description).HasColumnName("description").IsRequired(false).HasMaxLength(250).HasDefaultValue(null);
-            entity.Property(p => p.Url).HasColumnName("url").IsRequired(true).HasMaxLength(255);
+            entity.Property(p => p.Url).HasColumnName("url").IsRequired(false).HasMaxLength(255);
             entity.Property(p => p.ImageUrl).HasColumnName("image_url").IsRequired(false).HasMaxLength(255);
             entity.Property(p => p.Deleted).HasColumnName("deleted");
             entity.Property(p => p.Extension).HasColumnName("extension").IsRequired(false);

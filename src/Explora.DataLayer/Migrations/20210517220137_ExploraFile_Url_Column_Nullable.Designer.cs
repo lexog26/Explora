@@ -3,14 +3,16 @@ using System;
 using Explora.DataLayer.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Explora.DataLayer.Migrations
 {
     [DbContext(typeof(ExploraContext))]
-    partial class ExploraContextModelSnapshot : ModelSnapshot
+    [Migration("20210517220137_ExploraFile_Url_Column_Nullable")]
+    partial class ExploraFile_Url_Column_Nullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
