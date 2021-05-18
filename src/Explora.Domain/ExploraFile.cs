@@ -10,6 +10,8 @@ namespace Explora.Domain
 
         public string Name { get; set; }
 
+        public string ScientificName { get; set; }
+
         public string Extension { get; set; }
 
         public int Version { get; set; }

@@ -41,6 +41,8 @@ namespace Explora.DataTransferObjects.DataTransferObjects
 
         public string Name { get; set; }
 
+        public string ScientificName { get; set; }
+
         public string Extension { get; set; }
 
         public DateTime LastTimestamp { get; set; }
