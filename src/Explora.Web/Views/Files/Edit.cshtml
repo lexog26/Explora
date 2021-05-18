@@ -12,7 +12,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb bg-transparent p-0 mt-1 mb-0">
                 <li class="breadcrumb-item" aria-current="page">Modelos 3D</li>
-                <li class="breadcrumb-item active" aria-current="page">@Html.DisplayFor(model => model.Name)</li>
+                <li class="breadcrumb-item active" aria-current="page">@Html.DisplayFor(model => model.ScientificName)</li>
             </ol>
         </nav>
     </div>
@@ -23,7 +23,7 @@
         <a class="btn btn-primary botonVolver" asp-action="Index" role="button"><</a>
     </div>
     <div class="col-7 text-left">
-        <h1 class="card-title crear">@Html.DisplayFor(model => model.Name)</h1>
+        <h1 class="card-title crear">@Html.DisplayFor(model => model.ScientificName)</h1>
     </div>
 </div>
 
@@ -36,7 +36,7 @@
                     <div class="float-chart-container">
                         <div class="form-group">
                             <label>NOMBRE</label>
-                            <input type="text" asp-for="@Model.Name" required class="form-control" name="name">
+                            <input type="text" asp-for="@Model.ScientificName" required class="form-control" name="scientificName">
                             <input name="id" hidden value="@Model.Id" />
                         </div>
                         <div class="form-group">
@@ -92,7 +92,7 @@
                             {
                                 <label class="control-label">@Html.DisplayName("IOs")</label>
                             }
-                            <input type="file" class="form-control-file" name="file">
+                            <input type="file" class="form-control-file" name="file" required>
                         </div>
                     </div>
                 </div>

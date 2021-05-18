@@ -52,6 +52,7 @@ namespace Explora.Web.Controllers
                 {
                     Id = file.Id,
                     Name = file.Name,
+                    ScientificName = file.ScientificName,
                     Collection = collectionName,
                     Description = file.Description,
                     Platform = file.Platform
@@ -68,7 +69,7 @@ namespace Explora.Web.Controllers
         // POST: files/create
         [HttpPost("/files/create")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(string name, IFormFile androidFile, IFormFile iosFile, string description,
+        public async Task<IActionResult> Create(string scientificName, IFormFile androidFile, IFormFile iosFile, string description,
                                                 IFormFile image, string collection)
         {
             try
@@ -80,7 +81,8 @@ namespace Explora.Web.Controllers
 
                     var androidDto = new FileDto
                     {
-                        Name = name,
+                        Name = androidFile != null ? androidFile.FileName : "",
+                        ScientificName = scientificName,
                         Description = description,
                         CollectionId = collectionId,
                         Platform = Platform.Android
@@ -92,7 +94,8 @@ namespace Explora.Web.Controllers
                     //Create IOs file
                     var iosDto = new FileDto
                     {
-                        Name = name,
+                        Name = iosFile != null ? iosFile.FileName : "",
+                        ScientificName = scientificName,
                         Description = description,
                         CollectionId = collectionId,
                         Platform = Platform.IOs
@@ -113,12 +116,21 @@ namespace Explora.Web.Controllers
         // POST: files/5
         [HttpPost("/files/update")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(int id, string name, IFormFile file, IFormFile image, string description)
+        public async Task<IActionResult> Update(int id, string scientificName, IFormFile file, IFormFile image, string description)
         {
             try
             {
-                await _fileService.UpdateFileDataAsync(
-                    new FileDto { Id = id, Description = description, Name = name},
+                var fileDto = new FileDto
+                {
+                    Id = id,
+                    Description = description,
+                    ScientificName = scientificName
+                };
+                if(file != null)
+                {
+                    fileDto.Name = file.FileName;
+                }
+                await _fileService.UpdateFileDataAsync(fileDto,
                     file != null ? file.OpenReadStream() : null,
                     image != null ? image.OpenReadStream() : null);
 
@@ -150,6 +162,7 @@ namespace Explora.Web.Controllers
                     Id = item.Id,
                     ImageUrl = hostUrl + item.ImageUrl,
                     Name = item.Name,
+                    ScientificName = item.ScientificName,
                     Platform = item.Platform,
                     Collection = collection != null ? collection.Name : null
                 });

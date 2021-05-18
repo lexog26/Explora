@@ -70,11 +70,12 @@ namespace Explora.BusinessLogic.Services
         {
             var file = await _repository.GetEntityByIdAsync<ExploraFile, int>(fileDto.Id);
             file.Description = fileDto.Description;
-            file.Name = fileDto.Name;
+            file.ScientificName = fileDto.ScientificName;
             file.ModifiedDate = DateTime.UtcNow;
 
             if (blobData != null)
             {
+                file.Name = fileDto.Name;
                 file.Version = file.Version + 1;
                 //Save new file data
                 await _blobService.UpdateResourceBlobAsync(

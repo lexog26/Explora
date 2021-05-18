@@ -12,6 +12,8 @@ namespace Explora.Web.Models
 
         public string Name { get; set; }
 
+        public string ScientificName { get; set; }
+
         public Platform Platform { get; set; }
 
         public string Collection { get; set; }

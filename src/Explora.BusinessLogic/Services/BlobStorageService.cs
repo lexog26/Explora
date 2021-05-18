@@ -36,7 +36,7 @@ namespace Explora.BusinessLogic.Services
                 //Delete to avoid bad information
                 if (directoryInfo.Exists)
                 {
-                    directoryInfo.Delete();
+                    directoryInfo.Delete(true);
                 }
                 ///
                 directoryInfo.Create();
