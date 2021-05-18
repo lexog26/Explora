@@ -18,12 +18,16 @@ namespace Explora.Web.Controllers
     public class FilesController : Controller
     {
         protected readonly IExploraFileService _fileService;
-        protected ICollectionService _collectionService;
+        protected readonly ICollectionService _collectionService;
+        protected readonly IBlobStorageService _blobStorageService;
 
-        public FilesController(IExploraFileService fileService, ICollectionService collectionService)
+        public FilesController(IExploraFileService fileService,
+                               ICollectionService collectionService,
+                               IBlobStorageService blobStorageService)
         {
             _fileService = fileService;
             _collectionService = collectionService;
+            _blobStorageService = blobStorageService;
         }
 
         // GET: files
@@ -79,6 +83,7 @@ namespace Explora.Web.Controllers
                 {
                     collectionId = (await _collectionService.GetCollectionsByNameAsync(collection)).First().Id;
 
+                    //Create Android dto
                     var androidDto = new FileDto
                     {
                         Name = androidFile != null ? androidFile.FileName : "",
@@ -87,11 +92,8 @@ namespace Explora.Web.Controllers
                         CollectionId = collectionId,
                         Platform = Platform.Android
                     };
-                    //Create Android file
-                    await _fileService.CreateAsync(androidDto, androidFile != null ? androidFile.OpenReadStream() : null,
-                                                   image != null ? image.OpenReadStream() : null);
 
-                    //Create IOs file
+                    //Create IOs dto
                     var iosDto = new FileDto
                     {
                         Name = iosFile != null ? iosFile.FileName : "",
@@ -100,8 +102,9 @@ namespace Explora.Web.Controllers
                         CollectionId = collectionId,
                         Platform = Platform.IOs
                     };
-                    await _fileService.CreateAsync(iosDto, iosFile != null ? iosFile.OpenReadStream() : null,
-                                                   image != null ? image.OpenReadStream() : null);
+
+                    await CreateFileAsync(androidDto, image, androidFile);
+                    await CreateFileAsync(iosDto, image, iosFile);
                 }
 
                 return RedirectToAction(nameof(Index));
@@ -129,10 +132,33 @@ namespace Explora.Web.Controllers
                 if(file != null)
                 {
                     fileDto.Name = file.FileName;
+                    //Save new file data
+                    await _blobStorageService.UpdateResourceBlobAsync(
+                            new ResourceBlobDto
+                            {
+                                Id = id,
+                                Blob = file.OpenReadStream(),
+                                Name = file.FileName,
+                                Type = Resource.FileBlob
+                            }
+                        );
+
                 }
-                await _fileService.UpdateFileDataAsync(fileDto,
-                    file != null ? file.OpenReadStream() : null,
-                    image != null ? image.OpenReadStream() : null);
+                //Save file's metadata
+                await _fileService.UpdateAsync(fileDto);
+
+                //Save new image
+                if (image != null)
+                {
+                    await _blobStorageService.UpdateResourceBlobAsync(
+                        new ResourceBlobDto
+                        {
+                            Id = id,
+                            Blob = image.OpenReadStream(),
+                            Name = image.FileName,
+                            Type = Resource.FileImage
+                        });
+                }
 
                 return RedirectToAction(nameof(Index));
             }
@@ -168,6 +194,39 @@ namespace Explora.Web.Controllers
                 });
             }
             return files;
+        }
+
+        protected async Task CreateFileAsync(FileDto fileDto, IFormFile image, IFormFile fileBlob)
+        {
+            //Save file metadata in db
+            var file = await _fileService.CreateAsync(fileDto);
+
+            //Save file blob's data
+            if (fileBlob != null)
+            {
+                await _blobStorageService.SaveResourceBlobAsync(
+                        new ResourceBlobDto
+                        {
+                            Id = file.Id,
+                            Blob = fileBlob.OpenReadStream(),
+                            Name = fileBlob.FileName,
+                            Type = Resource.FileBlob
+                        }
+                    );
+            }
+
+            //Save image
+            if (image != null)
+            {
+                await _blobStorageService.SaveResourceBlobAsync(
+                    new ResourceBlobDto
+                    {
+                        Id = file.Id,
+                        Blob = image.OpenReadStream(),
+                        Name = image.FileName,
+                        Type = Resource.FileImage
+                    });
+            }
         }
 
     }

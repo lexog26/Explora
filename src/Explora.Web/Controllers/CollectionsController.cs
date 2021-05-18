@@ -54,7 +54,7 @@ namespace Explora.Web.Controllers
                     new ResourceBlobDto
                     {
                         Id = collection.Id,
-                        Name = collection.Name,
+                        Name = image.FileName,
                         Type = Enums.Resource.CollectionImage,
                         Blob = image.OpenReadStream()
                     });
@@ -83,7 +83,7 @@ namespace Explora.Web.Controllers
                     new ResourceBlobDto
                     {
                         Id = collection.Id,
-                        Name = collection.Name,
+                        Name = image.FileName,
                         Type = Enums.Resource.CollectionImage,
                         Blob = image.OpenReadStream()
                     });

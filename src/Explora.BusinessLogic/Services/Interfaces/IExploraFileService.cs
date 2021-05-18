@@ -12,9 +12,9 @@ namespace Explora.BusinessLogic.Services.Interfaces
 {
     public interface IExploraFileService : IServiceBase
     {
-        Task<FileDto> CreateAsync(FileDto fileDto, Stream blobData, Stream imageData);
+        Task<FileDto> CreateAsync(FileDto fileDto);
 
-        Task<FileDto> UpdateFileDataAsync(FileDto fileDto, Stream blobData, Stream imageData);
+        Task<FileDto> UpdateAsync(FileDto fileDto);
 
         Task<FileDto> GetByIdAsync(int id);
 

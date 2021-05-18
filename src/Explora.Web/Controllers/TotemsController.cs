@@ -68,7 +68,7 @@ namespace Explora.Web.Controllers
                     new ResourceBlobDto
                     {
                         Id = totem.Id,
-                        Name = totem.Name,
+                        Name = file.FileName,
                         Type = Resource.TotemBlob,
                         Blob = file.OpenReadStream()
                     });
@@ -96,7 +96,7 @@ namespace Explora.Web.Controllers
                     new ResourceBlobDto
                     {
                         Id = totem.Id,
-                        Name = totem.Name,
+                        Name = image.FileName,
                         Type = Resource.TotemImage,
                         Blob = image.OpenReadStream()
                     });
@@ -109,7 +109,7 @@ namespace Explora.Web.Controllers
                     new ResourceBlobDto
                     {
                         Id = totem.Id,
-                        Name = totem.Name,
+                        Name = file.FileName,
                         Type = Resource.TotemBlob,
                         Blob = file.OpenReadStream()
                     });

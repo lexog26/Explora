@@ -28,84 +28,33 @@ namespace Explora.BusinessLogic.Services
             _blobService = directoryBlobStorageService;
         }
 
-        public async Task<FileDto> CreateAsync(FileDto fileDto, Stream blobData, Stream imageData)
+        public async Task<FileDto> CreateAsync(FileDto fileDto)
         {
             var entityFile = _mapper.Map<FileDto, ExploraFile>(fileDto);
             _repository.Create<ExploraFile, int>(entityFile);
             await SaveChangesAsync();
-
-            ///Save file blob
-            if (blobData != null)
-            {
-                await _blobService.SaveResourceBlobAsync(
-                    new ResourceBlobDto
-                    {
-                        Id = entityFile.Id,
-                        Name = entityFile.Name,
-                        Type = Resource.FileBlob,
-                        Blob = blobData
-                    });
-            }
-
-            //Save file image
-            if (imageData != null)
-            {
-                await _blobService.SaveResourceBlobAsync(
-                    new ResourceBlobDto
-                    {
-                        Id = entityFile.Id,
-                        Name = entityFile.Name,
-                        Type = Resource.FileImage,
-                        Blob = imageData
-                    });
-            }
-
             entityFile.Url = GenerateUrl(entityFile.Id);
             entityFile.ImageUrl = $"api/files/{entityFile.Id}/image-data";
             await SaveChangesAsync();
             return _mapper.Map<FileDto>(entityFile);
         }
 
-        public async Task<FileDto> UpdateFileDataAsync(FileDto fileDto, Stream blobData, Stream imageData)
+        public async Task<FileDto> UpdateAsync(FileDto fileDto)
         {
             var file = await _repository.GetEntityByIdAsync<ExploraFile, int>(fileDto.Id);
             file.Description = fileDto.Description;
             file.ScientificName = fileDto.ScientificName;
             file.ModifiedDate = DateTime.UtcNow;
 
-            if (blobData != null)
+            //File's blob change context
+            if (!string.IsNullOrEmpty(fileDto.Name))
             {
-                file.Name = fileDto.Name;
+                file.Name =  fileDto.Name;
                 file.Version = file.Version + 1;
-                //Save new file data
-                await _blobService.UpdateResourceBlobAsync(
-                        new ResourceBlobDto
-                        {
-                            Id = file.Id,
-                            Blob = blobData,
-                            Name = file.Name,
-                            Type = Resource.FileBlob
-                        }
-                    );
             }
-            
-            //Save new changes to db
+
             _repository.Update(file);
             await SaveChangesAsync();
-
-            //Save new image
-            if (imageData != null)
-            {
-                await _blobService.UpdateResourceBlobAsync(
-                    new ResourceBlobDto
-                    {
-                        Id = file.Id,
-                        Blob = imageData,
-                        Name = file.Name,
-                        Type = Resource.FileImage
-                    });
-            }
-
             return _mapper.Map<FileDto>(file);
         }
 
